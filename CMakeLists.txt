@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(visual-behaviour-asimros)
-
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -44,17 +43,26 @@ link_directories(
 add_definitions(${PCL_DEFINITIONS})
 
 add_library(${PROJECT_NAME}
-  src/ball_perceiver/ImageConverter.cpp
+  src/br2_tracking/PIDController.cpp  
 )
 
-add_executable(hsv_tuner_node src/hsv_tuner_node.cpp)
-target_link_libraries(hsv_tuner_node ${catkin_LIBRARIES} ${PROJECT_NAME} ${OpenCV_LIBRARIES})
+add_executable(image_filter src/image_filter.cpp)
+target_link_libraries(image_filter ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-set(ROSLINT_CPP_OPTS "--filter=-runtime/printf")
+add_executable(cloud_filter src/cloud_filter.cpp)
+target_link_libraries(cloud_filter ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(tf_ball src/tf_ball.cpp)
+target_link_libraries(tf_ball ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(follow_example src/follow_example.cpp)
+target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
 
 roslint_cpp(
-  src/hsv_tuner_node.cpp
-  include/ball_perceiver/ImageConverter.h
-  src/ball_perceiver/ImageConverter.cpp
+  include/br2_tracking/PIDController.hpp
+  src/br2_tracking/PIDController.cpp
+  src/image_filter.cpp
+  src/cloud_filter.cpp
+  src/tf_ball.cpp
+  src/follow_example.cpp
 )
-
