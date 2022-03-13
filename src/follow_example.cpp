@@ -56,7 +56,7 @@ int main(int argc, char **argv)
       double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
 
       vel_msgs.linear.x = vel_pid.get_output(dist);
-      vel_msgs.angular.z = angle_pid.get_output(angle);
+      vel_msgs.angular.z = angle;
       ROS_INFO("%f", angle);
 
     }

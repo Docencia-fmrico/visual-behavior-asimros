@@ -1,7 +1,0 @@
-<launch>
-	<include file="$(find robots)/launch/sim.launch"></include>
-	<node pkg="visual-behaviour-asimros" type="cloud_filter" name="cloud_filter" output="screen"></node>
-	<node pkg="visual-behaviour-asimros" type="follow_example" name="follow_example" output="screen"></node>
-	<node pkg="visual-behaviour-asimros" type="image_filter" name="image_filter" output="screen"></node>
-	<node pkg="visual-behaviour-asimros" type="tf_ball" name="tf_ball" output="screen"></node>
-</launch>

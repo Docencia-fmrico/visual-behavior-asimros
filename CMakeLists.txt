@@ -43,17 +43,20 @@ link_directories(
 add_definitions(${PCL_DEFINITIONS})
 
 add_library(${PROJECT_NAME}
+  src/ball_positioning/image_filter.cpp
+  src/ball_positioning/cloud_filter.cpp
+  src/ball_positioning/tf_ball.cpp
   src/br2_tracking/PIDController.cpp  
 )
 
-add_executable(image_filter src/image_filter.cpp)
-target_link_libraries(image_filter ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_executable(image_filter_node src/image_filter_node.cpp)
+target_link_libraries(image_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_executable(cloud_filter src/cloud_filter.cpp)
-target_link_libraries(cloud_filter ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_executable(cloud_filter_node src/cloud_filter_node.cpp)
+target_link_libraries(cloud_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_executable(tf_ball src/tf_ball.cpp)
-target_link_libraries(tf_ball ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_executable(tf_ball_node src/tf_ball_node.cpp)
+target_link_libraries(tf_ball_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 add_executable(follow_example src/follow_example.cpp)
 target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
@@ -61,8 +64,14 @@ target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
 roslint_cpp(
   include/br2_tracking/PIDController.hpp
   src/br2_tracking/PIDController.cpp
-  src/image_filter.cpp
-  src/cloud_filter.cpp
-  src/tf_ball.cpp
+  include/ball_positioning/image_filter.h
+  src/ball_positioning/image_filter.cpp
+  include/ball_positioning/cloud_filter.h
+  src/ball_positioning/cloud_filter.cpp
+  include/ball_positioning/tf_ball.h
+  src/ball_positioning/tf_ball.cpp
+  src/image_filter_node.cpp
+  src/cloud_filter_node.cpp
+  src/tf_ball_node.cpp
   src/follow_example.cpp
 )
