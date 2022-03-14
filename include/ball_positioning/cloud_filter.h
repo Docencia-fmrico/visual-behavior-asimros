@@ -54,12 +54,11 @@ public:
   void hsvCB(const ros::MessageEvent<std_msgs::Float32 const>& event);
 
 private:
-  void printHSV();
   bool isValid(int channel, const pcl::PointXYZHSV& hsv);
   void initHSV();
 
-
-  static const int MAX_CHANNELS = 3;
+  std::string cloudsource_;
+  static const int MAX_CHANNELS = 1;
   ros::NodeHandle nh_;
   ros::Subscriber cloud_sub_;
   HSVInfo hsvFilters_[MAX_CHANNELS];

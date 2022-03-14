@@ -42,7 +42,7 @@
 namespace ball_positioning
 {
 
-RGBDtf::RGBDtf(): objectFrameId_("/object/0")
+RGBDtf::RGBDtf(): objectFrameId_("/ball/0")
 , workingFrameId_("/base_footprint")
 , cameraTopicId_("/cloud_filtered/0")
 {

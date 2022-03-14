@@ -36,10 +36,11 @@ namespace ball_positioning
 {
 
 RGBDFilter::RGBDFilter()
+: nh_("~")
 {
-  initHSV();
-
-  cloud_sub_ = nh_.subscribe("/camera/depth/points", 1, &RGBDFilter::cloudCB, this);
+  RGBDFilter::initHSV();
+  cloudsource_ = nh_.param("cloudsource", std::string("/camera/depth/points"));
+  cloud_sub_ = nh_.subscribe(cloudsource_, 1, &RGBDFilter::cloudCB, this);
 
   if ( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug) )
   {
@@ -63,7 +64,7 @@ void RGBDFilter::cloudCB(const sensor_msgs::PointCloud2::ConstPtr& cloud_in)
         pcl::PointXYZHSV hsv;
         pcl::PointXYZRGBtoXYZHSV(*it, hsv);
 
-        if (isValid(i, hsv))
+        if (RGBDFilter::isValid(i, hsv))
           pcrgb_out->push_back(*it);
       }
     }
@@ -98,17 +99,6 @@ void RGBDFilter::hsvCB(const ros::MessageEvent<std_msgs::Float32 const>& event)
   if (fields[3] == "V")  hsvFilters_[channel].hsv[IDX_V] =  msg->data;
 }
 
-void RGBDFilter::printHSV()
-{
-  for (int i=0; i < MAX_CHANNELS; i++)
-  {
-    ROS_INFO("[%d] H[%f - %f]\tS[%f - %f]\tV[%f - %f]", i,
-        hsvFilters_[i].hsv[IDX_h], hsvFilters_[i].hsv[IDX_H],
-        hsvFilters_[i].hsv[IDX_s], hsvFilters_[i].hsv[IDX_S],
-        hsvFilters_[i].hsv[IDX_v], hsvFilters_[i].hsv[IDX_V]);
-  }
-}
-
 bool RGBDFilter::isValid(int channel, const pcl::PointXYZHSV& hsv)
 {
   pcl::PointXYZHSV hsv_scaled;
@@ -134,7 +124,7 @@ void RGBDFilter::initHSV()
 
     char topic_id[256];
     sprintf(topic_id, "/hsv_filter/%d/h", i);
-    hsvFilters_[i].hsv_subs[IDX_h] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
+    hsvFilters_[i].hsv_subs[IDX_h] = nh_.subscribe(topic_id, 1, RGBDFilter::hsvCB);
     sprintf(topic_id, "/hsv_filter/%d/H", i);
     hsvFilters_[i].hsv_subs[IDX_H] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
     sprintf(topic_id, "/hsv_filter/%d/s", i);
@@ -148,6 +138,7 @@ void RGBDFilter::initHSV()
     hsvFilters_[i].hsv_subs[IDX_V] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
 
     sprintf(topic_id, "/cloud_filtered/%d", i);
+    ROS_INFO("holis");
     hsvFilters_[i].cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(topic_id, 1, false);
   }
 }

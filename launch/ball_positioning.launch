@@ -1,6 +1,7 @@
 <launch>
-	<include file="$(find robots)/launch/sim.launch"></include>
-	<node pkg="visual-behaviour-asimros" type="cloud_filter_node" name="cloud_filter_node" output="screen"></node>
+	<node pkg="visual-behaviour-asimros" type="cloud_filter_node" name="cloud_filter_node" output="screen">
+		<rosparam command="load" file="$(find visual-behaviour-asimros)/config/config_1.yaml"/>
+	</node>
 	<node pkg="visual-behaviour-asimros" type="image_filter_node" name="image_filter_node" output="screen"></node>
 	<node pkg="visual-behaviour-asimros" type="tf_ball_node" name="tf_ball_node" output="screen"></node>
 </launch>
