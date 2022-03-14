@@ -18,6 +18,7 @@
 #include "behavior_trees/Turn.h"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
+#include "geometry_msgs/Twist.h"
 
 #include "ros/ros.h"
 
@@ -29,7 +30,7 @@ Turn::Turn()
 }
 
 void
-ApproachObject::halt()
+Turn::halt()
 {
   ROS_INFO("Turn halt");
 }
@@ -37,6 +38,26 @@ ApproachObject::halt()
 BT::NodeStatus
 Turn::tick()
 {
+  geometry_msgs::Twist cmd;
+
+  cmd.linear.y = 0.0;
+  cmd.linear.z = 0.0;
+  cmd.angular.x = 0.0;
+  cmd.angular.y = 0.0;
+
+  detected_ts_ = ros::Time::now();
+  cmd.angular.z = turning_speed_;
+
+  if((ros::Time::now()-turn_ts_).toSec() > turning_time_ )
+  {
+    cmd.linear.z = 0.0;
+    return BT::NodeStatus::SUCCESS;
+  }
+  else
+  {
+    return BT::NodeStatus::RUNNING;
+  }
+
 }
 
 }  // namespace behavior_trees

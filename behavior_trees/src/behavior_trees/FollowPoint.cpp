@@ -29,7 +29,7 @@ FollowPoint::FollowPoint()
 }
 
 void
-ApproachObject::halt()
+FollowPoint::halt()
 {
   ROS_INFO("FollowPoint halt");
 }

@@ -30,6 +30,8 @@ class PerciveBall : public BT::ActionNodeBase
   public:
     explicit PerciveBall();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario

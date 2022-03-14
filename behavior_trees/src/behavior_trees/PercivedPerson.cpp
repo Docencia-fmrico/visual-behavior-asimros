@@ -29,7 +29,7 @@ PercivePerson::PercivePerson()
 }
 
 void
-ApproachObject::halt()
+PercivePerson::halt()
 {
   ROS_INFO("PercivePerson halt");
 }

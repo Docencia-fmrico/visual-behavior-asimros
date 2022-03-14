@@ -30,6 +30,8 @@ class FollowPoint : public BT::ActionNodeBase
   public:
     explicit FollowPoint();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario

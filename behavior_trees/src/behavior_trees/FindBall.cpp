@@ -29,7 +29,7 @@ FindBall::FindBall()
 }
 
 void
-ApproachObject::halt()
+FindBall::halt()
 {
   ROS_INFO("FindBall halt");
 }

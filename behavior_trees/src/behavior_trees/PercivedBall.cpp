@@ -29,7 +29,7 @@ PerciveBall::PerciveBall()
 }
 
 void
-ApproachObject::halt()
+PerciveBall::halt()
 {
   ROS_INFO("PerciveBall halt");
 }

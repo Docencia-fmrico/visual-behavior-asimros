@@ -30,6 +30,8 @@ class FindBall : public BT::ActionNodeBase
   public:
     explicit FindBall();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario

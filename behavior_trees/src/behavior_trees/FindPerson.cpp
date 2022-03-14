@@ -29,7 +29,7 @@ FindPerson::FindPerson()
 }
 
 void
-ApproachObject::halt()
+FindPerson::halt()
 {
   ROS_INFO("FindPerson halt");
 }

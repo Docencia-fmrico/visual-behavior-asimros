@@ -30,6 +30,8 @@ class FindPerson : public BT::ActionNodeBase
   public:
     explicit FindPerson();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario

@@ -30,6 +30,8 @@ class Turn : public BT::ActionNodeBase
   public:
     explicit Turn();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario
@@ -40,6 +42,10 @@ class Turn : public BT::ActionNodeBase
 
   private:
     //toDo
+    ros::Publisher vel_pub_;
+    int turning_time_ = 0.5;
+    int turning_speed_ = 0.5;
+    int detected_ts_ ;
 };
 
 }  // namespace behavior_trees

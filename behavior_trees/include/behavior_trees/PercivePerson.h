@@ -30,6 +30,8 @@ class PercivePerson : public BT::ActionNodeBase
   public:
     explicit PercivePerson();
 
+    void halt();
+
     BT::NodeStatus tick();
 
     //no sé si esto es necesario
