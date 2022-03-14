@@ -15,6 +15,8 @@
 #include "tf2_ros/transform_broadcaster.h"
 #include "tf2/LinearMath/Quaternion.h"
 
+#define OBJ_PUB_RATE  10.0
+
 geometry_msgs::TransformStamped generate_tf(cv::Point2d p)
 {
   tf2::Stamped<tf2::Transform> object;
@@ -57,18 +59,35 @@ void callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msg
 
     std::cerr << box.Class << " at x (dist): " << p.x << ", y (x): " << p.y << std::endl;
 
+    if(std::isnan(p.x))
+    {
+      return;
+    }
+
     geometry_msgs::TransformStamped bf2person = generate_tf(p);
 
-    try
+    ros::Time obj_ts = ros::Time::now();
+
+    while (ros::ok())
     {
-      bf2person.header.stamp = ros::Time::now();
-      br.sendTransform(bf2person);
-    }
-    catch(tf2::TransformException &exception)
-    {
-      ROS_ERROR("%s", exception.what());
+      if ((ros::Time::now() - obj_ts).toSec() > OBJ_PUB_RATE)
+      {
+        obj_ts = ros::Time::now();
+        bf2person = generate_tf(p);
+      }
+
+      try
+      {
+        bf2person.header.stamp = ros::Time::now();
+        br.sendTransform(bf2person);
+      }
+      catch(tf2::TransformException &exception)
+      {
+        ROS_ERROR("%s", exception.what());
+      }
     }
   }
+
 }
 
 int main(int argc, char** argv)
