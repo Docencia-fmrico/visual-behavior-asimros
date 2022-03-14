@@ -43,19 +43,12 @@ link_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
-# add_library(${PROJECT_NAME}
-  #src/ball_perceiver/ImageConverter.cpp
-# )
+add_executable(node_tf_person src/node_tf_person.cpp)
 
-# add_executable(hsv_tuner_node src/hsv_tuner_node.cpp)
-# target_link_libraries(hsv_tuner_node ${catkin_LIBRARIES} ${PROJECT_NAME} ${OpenCV_LIBRARIES})
+target_link_libraries(node_tf_person ${catkin_LIBRARIES} )
 
 set(ROSLINT_CPP_OPTS "--filter=-runtime/printf")
 
-
-#roslint_cpp(
- # src/hsv_tuner_node.cpp
- # include/ball_perceiver/ImageConverter.h
- # src/ball_perceiver/ImageConverter.cpp
-#)
-
+roslint_cpp(
+  src/node_tf_person.cpp
+)
