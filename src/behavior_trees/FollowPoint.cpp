@@ -64,29 +64,8 @@ BT::NodeStatus
 FollowPoint::tick()
 {
 
-  tf2_ros::TransformListener listener_(buffer_);
-  if (buffer_.canTransform("base_footprint", "object/0", ros::Time(0), ros::Duration(0.2), &error_))
-  {
-    bf2point_msg_ = buffer_.lookupTransform("base_footprint", "object/0", ros::Time(0));
-
-    tf2::fromMsg(bf2point_msg_, bf2point_);
-
-    double dist = bf2point_.getOrigin().length();
-    double angle = atan2(bf2point_.getOrigin().y(), bf2point_.getOrigin().x());
-
-    vel_msgs_.linear.x = 0.3; //vel_pid_.get_output(dist);
-    vel_msgs_.angular.z = angle;
-    return BT::NodeStatus::RUNNING;
-    ROS_INFO("%f", angle);
-
-  }
-  else
-  {
-    return BT::NodeStatus::FAILURE;
-    ROS_ERROR("%s", error_.c_str());
-  }
-  vel_pub_.publish(vel_msgs_);
-  return BT::NodeStatus::FAILURE;
+  ROS_INFO("Following point");
+  return BT::NodeStatus::SUCCESS;
 }
 
 }  // namespace behavior_treesS

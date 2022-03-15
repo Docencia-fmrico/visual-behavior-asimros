@@ -39,6 +39,7 @@ FindBall::halt()
 BT::NodeStatus
 FindBall::tick()
 {
+  ROS_INFO("Checking ball");
   return BT::NodeStatus::SUCCESS;
 }
 

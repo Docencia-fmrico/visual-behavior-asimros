@@ -37,9 +37,9 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_follow_point_node"));
 
   auto blackboard = BT::Blackboard::create();
-  blackboard->set("object", "cup");
 
-  std::string pkgpath = ros::package::getPath("behavior_trees");
+  std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
+  
   std::string xml_file = pkgpath + "/behavior_trees_xml/tree_person.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   bool finish = false;
   while (ros::ok() && !finish)
   {
-    finish = tree.rootNode()->executeTick() == BT::NodeStatus::SUCCESS;
+    tree.rootNode()->executeTick();
 
     ros::spinOnce();
     loop_rate.sleep();

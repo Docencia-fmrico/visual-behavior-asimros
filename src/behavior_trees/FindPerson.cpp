@@ -38,6 +38,7 @@ FindPerson::halt()
 BT::NodeStatus
 FindPerson::tick()
 {
+  ROS_INFO("Looking for person");
   return BT::NodeStatus::SUCCESS;
 }
 

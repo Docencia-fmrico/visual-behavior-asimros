@@ -1,9 +1,7 @@
-<?xml version="1.0"?>
-<root main_tree_to_execute="BehaviorTree">
-    <!-- ////////// -->
-    <BehaviorTree name="BehaviorTree">
+ <root main_tree_to_execute="person_bt">
+   <BehaviorTree ID="person_bt">
         <ReactiveSequence name="root_rsequence">
-            <Fallbackname name="look_for_person">
+            <Fallback name="look_for_person">
                 <FindPerson name="person_seen"/>
                 <Turn name="turn"/>
             </Fallback>
@@ -12,16 +10,4 @@
             </ReactiveSequence>
         </ReactiveSequence>
     </BehaviorTree>
-
-<!-- ////////// -- (>)
-    <!-- ////////// -->
-    <TreeNodesModel>
-        <Action ID="ball_seen"/>
-        <Action ID="follow_point"/>
-        <Action ID="perceived_pos_ball"/>
-        <Action ID="turn"/>
-    </TreeNodesModel>
-    <!-- ////////// -->
 </root>
-
-<!-- ////////// -->

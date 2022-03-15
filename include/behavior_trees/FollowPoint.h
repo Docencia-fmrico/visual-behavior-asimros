@@ -47,15 +47,6 @@ class FollowPoint : public BT::ActionNodeBase
   private:
     ros::NodeHandle nh_;
     ros::Publisher vel_pub_;
-    tf2_ros::Buffer buffer_;
-
-    //br2_tracking::PIDController vel_pid_(1.0, 10.0, 0.0, 1.0);
-    //br2_tracking::PIDController angle_pid_(-1, 1, 0.0, 0.4);
-    geometry_msgs::Twist vel_msgs_;
-
-    geometry_msgs::TransformStamped bf2point_msg_;
-    tf2::Stamped<tf2::Transform> bf2point_;
-    std::string error_;
 };
 
 }  // namespace behavior_trees
