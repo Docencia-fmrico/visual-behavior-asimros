@@ -8,7 +8,6 @@
                 <Turn name="turn"/>
             </Fallback>
             <ReactiveSequence name="go_for_ball">
-                <PerciveBall name="perceived_pos_ball"/>
                 <FollowPoint name="follow_point"/>
             </ReactiveSequence>
         </ReactiveSequence>

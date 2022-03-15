@@ -8,7 +8,6 @@
                 <Turn name="turn"/>
             </Fallback>
             <ReactiveSequence name="go_for_person">
-                <PercivePerson name="perceived_pos_person"/>
                 <FollowPoint name="follow_point"/>
             </ReactiveSequence>
         </ReactiveSequence>

@@ -41,7 +41,6 @@ Turn::tick()
   geometry_msgs::Twist cmd;
 
   cmd.linear.y = 0.0;
-  cmd.linear.z = 0.0;
   cmd.angular.x = 0.0;
   cmd.angular.y = 0.0;
 

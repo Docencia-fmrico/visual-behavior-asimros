@@ -32,18 +32,15 @@ int main(int argc, char **argv)
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("asr_find_ball_node"));
   factory.registerFromPlugin(loader.getOSName("asr_find_person_node"));
   factory.registerFromPlugin(loader.getOSName("asr_turn_node"));
-  factory.registerFromPlugin(loader.getOSName("asr_perceive_ball_node"));
-  factory.registerFromPlugin(loader.getOSName("asr_perceive_person_node"));
   factory.registerFromPlugin(loader.getOSName("asr_follow_point_node"));
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set("object", "cup");
 
   std::string pkgpath = ros::package::getPath("behavior_trees");
-  std::string xml_file = pkgpath + "/behavior_trees_xml/tree_ball.xml";
+  std::string xml_file = pkgpath + "/behavior_trees_xml/tree_person.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
   auto publisher_zmq = std::make_shared<BT::PublisherZMQ>(tree, 10, 1666, 1667);
