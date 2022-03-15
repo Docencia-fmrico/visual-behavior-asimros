@@ -1,0 +1,13 @@
+ <root main_tree_to_execute="ball_bt">
+   <BehaviorTree ID="ball_bt">
+        <ReactiveSequence name="root_rsequence">
+            <Fallback name="look_for_ball">
+                <FindBall name="ball_seen"/>
+                <Turn name="turn"/>
+            </Fallback>
+            <ReactiveSequence name="go_for_ball">
+                <FollowPoint name="follow_point"/>
+            </ReactiveSequence>
+        </ReactiveSequence>
+    </BehaviorTree>
+</root>
