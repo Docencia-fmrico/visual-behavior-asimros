@@ -64,6 +64,7 @@ BT::NodeStatus
 FollowPoint::tick()
 {
 
+  tf2_ros::TransformListener listener_(buffer_);
   if (buffer_.canTransform("base_footprint", "object/0", ros::Time(0), ros::Duration(0.2), &error_))
   {
     bf2point_msg_ = buffer_.lookupTransform("base_footprint", "object/0", ros::Time(0));

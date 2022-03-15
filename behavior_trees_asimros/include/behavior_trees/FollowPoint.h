@@ -48,7 +48,6 @@ class FollowPoint : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Publisher vel_pub_;
     tf2_ros::Buffer buffer_;
-    tf2_ros::TransformListener listener_(tf2_ros::Buffer);
 
     //br2_tracking::PIDController vel_pid_(1.0, 10.0, 0.0, 1.0);
     //br2_tracking::PIDController angle_pid_(-1, 1, 0.0, 0.4);
