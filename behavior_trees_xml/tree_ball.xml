@@ -12,16 +12,4 @@
             </ReactiveSequence>
         </ReactiveSequence>
     </BehaviorTree>
-
-<!-- ////////// -- (>)
-    <!-- ////////// -->
-    <TreeNodesModel>
-        <Action ID="ball_seen"/>
-        <Action ID="follow_point"/>
-        <Action ID="perceived_pos_ball"/>
-        <Action ID="turn"/>
-    </TreeNodesModel>
-    <!-- ////////// -->
 </root>
-
-<!-- ////////// -->
