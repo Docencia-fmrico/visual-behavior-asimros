@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>visual-behavior-asimros</name>
+  <name>visual-behaviour-asimros</name>
   <version>0.1.0</version>
-  <description>The behavior_trees_asimros package</description>
+  <description>Following balls and persons node</description>
 
   <maintainer email="fmrico@gmail.com">fmrico</maintainer>
 
@@ -20,6 +20,7 @@
   <build_depend>roslint</build_depend>
   <build_depend>libzmq3-dev</build_depend>
   <build_depend>dependencies</build_depend>
+
   <build_depend>sensor_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>pcl_ros</build_depend>
@@ -45,6 +46,7 @@
   <build_export_depend>darknet_ros_msgs</build_export_depend>
 
 
+
   <exec_depend>roscpp</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
@@ -62,3 +64,4 @@
   <export>
   </export>
 </package>
+
