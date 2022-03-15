@@ -37,6 +37,7 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_follow_point_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
+//  blackboard->set("object", "cup");
 
   std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
   std::string xml_file = pkgpath + "/behavior_trees_xml/tree_person.xml";
