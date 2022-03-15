@@ -36,7 +36,10 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_turn_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_follow_point_bt_node"));
 
-  std::string pkgpath = ros::package::getPath("behavior_trees");
+
+  auto blackboard = BT::Blackboard::create();
+
+  std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
   std::string xml_file = pkgpath + "/behavior_trees_xml/tree_ball.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);

@@ -37,10 +37,10 @@ add_library(asr_find_person_bt_node SHARED src/behavior_trees/FindPerson.cpp)
 add_library(asr_turn_bt_node SHARED src/behavior_trees/Turn.cpp)
 add_library(asr_follow_point_bt_node SHARED src/behavior_trees/FollowPoint.cpp)
 list(APPEND plugin_libs
-  asr_find_ball_node
-  asr_find_person_node
-  asr_turn_node
-  asr_follow_point_node
+  asr_find_ball_bt_node
+  asr_find_person_bt_node
+  asr_turn_bt_node
+  asr_follow_point_bt_node
 )
 
 foreach(bt_plugin ${plugin_libs})

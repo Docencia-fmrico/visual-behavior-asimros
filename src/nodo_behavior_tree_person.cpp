@@ -32,14 +32,13 @@ int main(int argc, char **argv)
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("asr_find_person_node"));
-  factory.registerFromPlugin(loader.getOSName("asr_turn_node"));
-  factory.registerFromPlugin(loader.getOSName("asr_follow_point_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_find_person_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_turn_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_follow_point_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
-  blackboard->set("object", "cup");
 
-  std::string pkgpath = ros::package::getPath("behavior_trees");
+  std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
   std::string xml_file = pkgpath + "/behavior_trees_xml/tree_person.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
