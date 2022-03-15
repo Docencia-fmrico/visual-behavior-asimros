@@ -35,8 +35,8 @@ int main(int argc, char **argv)
   tf2_ros::TransformListener listener(buffer);
 
   ros::Publisher vel_pub = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
-  br2_tracking::PIDController vel_pid(1.0, 10.0, 0.0, 1.0);
-  br2_tracking::PIDController angle_pid(-1, 1, 0.0, 0.4);
+  br2_tracking::PIDController pos_pid(1.0, 10.0, 0, 0.5);
+  br2_tracking::PIDController neg_pid(1.0, 0.0, 0, -0.5);
   geometry_msgs::Twist vel_msgs;
 
   ros::Rate loop_rate(1);
@@ -46,16 +46,15 @@ int main(int argc, char **argv)
     geometry_msgs::TransformStamped bf2ball_msg;
     tf2::Stamped<tf2::Transform> bf2ball;
     std::string error;
-    if (buffer.canTransform("base_footprint", "object/0", ros::Time(0), ros::Duration(0.2), &error))
+    if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(0.2), &error))
     {
-      bf2ball_msg = buffer.lookupTransform("base_footprint", "object/0", ros::Time(0));
+      bf2ball_msg = buffer.lookupTransform("base_footprint", "ball/0", ros::Time(0));
 
       tf2::fromMsg(bf2ball_msg, bf2ball);
 
       double dist = bf2ball.getOrigin().length();
       double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
-
-      vel_msgs.linear.x = vel_pid.get_output(dist);
+      vel_msgs.linear.x = pos_pid.get_output(dist);
       vel_msgs.angular.z = angle;
       ROS_INFO("%f", angle);
 

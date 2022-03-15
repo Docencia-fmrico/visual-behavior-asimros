@@ -36,11 +36,9 @@ namespace ball_positioning
 {
 
 RGBDFilter::RGBDFilter()
-: nh_("~")
 {
-  RGBDFilter::initHSV();
-  cloudsource_ = nh_.param("cloudsource", std::string("/camera/depth/points"));
-  cloud_sub_ = nh_.subscribe(cloudsource_, 1, &RGBDFilter::cloudCB, this);
+  initHSV();
+  cloud_sub_ = nh_.subscribe("/camera/depth/points", 1, &RGBDFilter::cloudCB, this);
 
   if ( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug) )
   {
@@ -64,7 +62,7 @@ void RGBDFilter::cloudCB(const sensor_msgs::PointCloud2::ConstPtr& cloud_in)
         pcl::PointXYZHSV hsv;
         pcl::PointXYZRGBtoXYZHSV(*it, hsv);
 
-        if (RGBDFilter::isValid(i, hsv))
+        if (isValid(i, hsv))
           pcrgb_out->push_back(*it);
       }
     }
@@ -124,7 +122,7 @@ void RGBDFilter::initHSV()
 
     char topic_id[256];
     sprintf(topic_id, "/hsv_filter/%d/h", i);
-    hsvFilters_[i].hsv_subs[IDX_h] = nh_.subscribe(topic_id, 1, RGBDFilter::hsvCB);
+    hsvFilters_[i].hsv_subs[IDX_h] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
     sprintf(topic_id, "/hsv_filter/%d/H", i);
     hsvFilters_[i].hsv_subs[IDX_H] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
     sprintf(topic_id, "/hsv_filter/%d/s", i);
@@ -138,7 +136,7 @@ void RGBDFilter::initHSV()
     hsvFilters_[i].hsv_subs[IDX_V] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
 
     sprintf(topic_id, "/cloud_filtered/%d", i);
-    ROS_INFO("holis");
+    
     hsvFilters_[i].cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(topic_id, 1, false);
   }
 }
