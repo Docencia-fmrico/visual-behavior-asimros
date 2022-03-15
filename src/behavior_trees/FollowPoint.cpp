@@ -85,8 +85,8 @@ FollowPoint::tick()
     return BT::NodeStatus::FAILURE;
     ROS_ERROR("%s", error_.c_str());
   }
-
   vel_pub_.publish(vel_msgs_);
+  return BT::NodeStatus::FAILURE;
 }
 
 }  // namespace behavior_treesS

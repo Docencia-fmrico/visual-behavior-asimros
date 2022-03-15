@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(behavior_trees_asimros)
+project(visual-behavior-asimros)
 
 # set(CMAKE_BUILD_TYPE Debug)
 
@@ -62,8 +62,6 @@ roslint_cpp(
   include/behavior_trees/FindBall.h src/behavior_trees/FindBall.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
-)
-roslint_cpp(
   src/nodo_behavior_tree_person.cpp
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
