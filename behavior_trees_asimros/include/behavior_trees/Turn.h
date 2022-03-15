@@ -28,24 +28,23 @@ namespace behavior_trees
 class Turn : public BT::ActionNodeBase
 {
   public:
-    explicit Turn();
+    explicit Turn(const std::string& name);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    //no sé si esto es necesario
-    static BT::PortsList providedPorts()
-    {
-        return { BT::InputPort<std::string>("object")};
-    }
 
   private:
     //toDo
     ros::Publisher vel_pub_;
-    int turning_time_ = 0.5;
-    int turning_speed_ = 0.5;
-    int detected_ts_ ;
+    float turning_speed_ = 0.5;
+
+    static constexpr double TURNING_TIME = 0.5;
+
+
+    ros::Time turn_ts_;
+
 };
 
 }  // namespace behavior_trees

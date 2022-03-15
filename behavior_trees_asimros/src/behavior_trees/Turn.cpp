@@ -25,7 +25,8 @@
 namespace behavior_trees
 {
 
-Turn::Turn()
+Turn::Turn(const std::string& name)
+: BT::ActionNodeBase(name, {})
 {
 }
 
@@ -44,10 +45,10 @@ Turn::tick()
   cmd.angular.x = 0.0;
   cmd.angular.y = 0.0;
 
-  detected_ts_ = ros::Time::now();
+  turn_ts_ = ros::Time::now();
   cmd.angular.z = turning_speed_;
 
-  if((ros::Time::now()-turn_ts_).toSec() > turning_time_ )
+  if((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
   {
     cmd.linear.z = 0.0;
     return BT::NodeStatus::SUCCESS;

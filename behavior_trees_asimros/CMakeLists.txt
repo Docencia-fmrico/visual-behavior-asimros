@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(behavior_trees)
+project(behavior_trees_asimros)
 
 # set(CMAKE_BUILD_TYPE Debug)
 
@@ -34,8 +34,8 @@ include_directories(
 
 add_library(asr_find_ball_node SHARED src/behavior_trees/FindBall.cpp)
 add_library(asr_find_person_node SHARED src/behavior_trees/FindPerson.cpp)
-add_library(asr_turn_node SHARED src/behavior_trees/FollowPoint.cpp)
-add_library(asr_follow_point_node SHARED src/behavior_trees/Turn.cpp)
+add_library(asr_turn_node SHARED src/behavior_trees/Turn.cpp)
+add_library(asr_follow_point_node SHARED src/behavior_trees/FollowPoint.cpp)
 list(APPEND plugin_libs
   asr_find_ball_node
   asr_find_person_node
@@ -51,15 +51,20 @@ endforeach()
 add_executable(nodo_behavior_tree_ball
   src/nodo_behavior_tree_ball.cpp
 )
-add_executable(nodo_behavior_trees_person
-  src/nodo_behavior_trees_person.cpp
+add_executable(nodo_behavior_tree_person
+  src/nodo_behavior_tree_person.cpp
 )
 target_link_libraries(nodo_behavior_tree_ball ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
-target_link_libraries(nodo_behavior_trees_person ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
+target_link_libraries(nodo_behavior_tree_person ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
 
 roslint_cpp(
-  src/nodo_behavior_trees.cpp
+  src/nodo_behavior_tree_ball.cpp
   include/behavior_trees/FindBall.h src/behavior_trees/FindBall.cpp
+  include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
+  include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
+)
+roslint_cpp(
+  src/nodo_behavior_tree_person.cpp
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp

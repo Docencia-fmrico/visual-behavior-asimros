@@ -1,3 +1,4 @@
+
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,38 +13,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_FINDPERSON_H
-#define BEHAVIOR_TREES_FINDPERSON_H
+#include <string>
+
+#include "behavior_trees/FindBall.h"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
-
-#include <string>
 
 #include "ros/ros.h"
 
 namespace behavior_trees
 {
 
-class FindPerson : public BT::ActionNodeBase
+FindBall::FindBall(const std::string& name)
+: BT::ActionNodeBase(name, {})
 {
-  public:
-    explicit FindPerson();
+}
 
-    void halt();
 
-    BT::NodeStatus tick();
+void
+FindBall::halt()
+{
+  ROS_INFO("FindBall halt");
+}
 
-    //no sé si esto es necesario
-    static BT::PortsList providedPorts()
-    {
-        return { BT::InputPort<std::string>("object")};
-    }
-
-  private:
-    //toDo
-};
+BT::NodeStatus
+FindBall::tick()
+{
+  return BT::NodeStatus::SUCCESS;
+}
 
 }  // namespace behavior_trees
 
-#endif  // BEHAVIOR_TREES_FINDPERSON_H
+#include "behaviortree_cpp_v3/bt_factory.h"
+BT_REGISTER_NODES(factory)
+{
+  factory.registerNodeType<behavior_trees::FindBall>("FindBall");
+}
