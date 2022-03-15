@@ -114,7 +114,7 @@ bool RGBDFilter::isValid(int channel, const pcl::PointXYZHSV& hsv)
 
 void RGBDFilter::initHSV()
 {
-  for (int i = 0; i < MAX_CHANNELS; i++)
+  for (int i = 0; i < 1; i++)
   {
     hsvFilters_[i].hsv[IDX_h] = hsvFilters_[i].hsv[IDX_s] = hsvFilters_[i].hsv[IDX_v] = 0.0;
     hsvFilters_[i].hsv[IDX_S] = hsvFilters_[i].hsv[IDX_V] = 255.0;
@@ -137,7 +137,7 @@ void RGBDFilter::initHSV()
 
     sprintf(topic_id, "/cloud_filtered/%d", i);
     
-    hsvFilters_[i].cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(topic_id, 1, false);
+    hsvFilters_[i].cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>("/cloud_filtered/0", 1, false);
   }
 }
 

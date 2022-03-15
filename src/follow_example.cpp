@@ -35,8 +35,8 @@ int main(int argc, char **argv)
   tf2_ros::TransformListener listener(buffer);
 
   ros::Publisher vel_pub = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
-  br2_tracking::PIDController pos_pid(1.0, 10.0, 0, 0.5);
-  br2_tracking::PIDController neg_pid(1.0, 0.0, 0, -0.5);
+  br2_tracking::PIDController vel_pid(0.0, 2.0, 0, 0.4);
+  br2_tracking::PIDController angle_pid(0.0, 1.5, 0, 0.4);
   geometry_msgs::Twist vel_msgs;
 
   ros::Rate loop_rate(1);
@@ -54,8 +54,8 @@ int main(int argc, char **argv)
 
       double dist = bf2ball.getOrigin().length();
       double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
-      vel_msgs.linear.x = pos_pid.get_output(dist);
-      vel_msgs.angular.z = angle;
+      vel_msgs.linear.x = vel_pid.get_output(dist - 1.0);
+      vel_msgs.angular.z = angle_pid.get_output(angle);
       ROS_INFO("%f", angle);
 
     }
