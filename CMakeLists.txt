@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(visual-behavior-asimros)
-
-# set(CMAKE_BUILD_TYPE Debug)
+project(visual-behaviour-asimros)
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CONFIG_PATH}")
@@ -48,6 +47,22 @@ foreach(bt_plugin ${plugin_libs})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
+add_library(${PROJECT_NAME}
+  src/ball_positioning/image_filter.cpp
+  src/ball_positioning/cloud_filter.cpp
+  src/ball_positioning/tf_ball.cpp
+  src/br2_tracking/PIDController.cpp  
+)
+
+add_executable(image_filter_node src/image_filter_node.cpp)
+target_link_libraries(image_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(cloud_filter_node src/cloud_filter_node.cpp)
+target_link_libraries(cloud_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(tf_ball_node src/tf_ball_node.cpp)
+target_link_libraries(tf_ball_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
 add_executable(nodo_behavior_tree_ball
   src/nodo_behavior_tree_ball.cpp
 )
@@ -56,6 +71,9 @@ add_executable(nodo_behavior_tree_person
 )
 target_link_libraries(nodo_behavior_tree_ball ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
 target_link_libraries(nodo_behavior_tree_person ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
+
+add_executable(follow_example src/follow_example.cpp)
+target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
 
 roslint_cpp(
   src/nodo_behavior_tree_ball.cpp
@@ -66,5 +84,16 @@ roslint_cpp(
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
+  include/br2_tracking/PIDController.hpp
+  src/br2_tracking/PIDController.cpp
+  include/ball_positioning/image_filter.h
+  src/ball_positioning/image_filter.cpp
+  include/ball_positioning/cloud_filter.h
+  src/ball_positioning/cloud_filter.cpp
+  include/ball_positioning/tf_ball.h
+  src/ball_positioning/tf_ball.cpp
+  src/image_filter_node.cpp
+  src/cloud_filter_node.cpp
+  src/tf_ball_node.cpp
+  src/follow_example.cpp
 )
-
