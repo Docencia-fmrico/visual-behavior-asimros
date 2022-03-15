@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(visual-behaviour-asimros)
+project(visual_bh)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -43,17 +43,18 @@ link_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
-add_library(${PROJECT_NAME} src/visual_behaviour/Data_tf.cpp)
-
+add_library(${PROJECT_NAME}
+ src/visual_bh/Tfperson.cpp
+)
 
 add_executable(node_tf_person src/node_tf_person.cpp)
 
-target_link_libraries(node_tf_person ${catkin_LIBRARIES} ${PROJECT_NAME} )
+target_link_libraries(node_tf_person ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 set(ROSLINT_CPP_OPTS "--filter=-runtime/printf")
 
 roslint_cpp(
   src/node_tf_person.cpp
-  src/visual_behavior/Data_tf.cpp
-  include/visual_behaviour/Data_tf.h
+  src/visual_bh/Tfperson.cpp
+  include/visual_bh/Tfperson.h
 )

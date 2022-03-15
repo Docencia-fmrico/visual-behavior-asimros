@@ -1,5 +1,5 @@
-#ifndef VISUAL_BEHAVIOU_DATA_TF_H
-#define VISUAL_BEHAVIOUR_DATA_TF_H
+#ifndef VISUAL_BH_TFPERSON_H
+#define VISUAL_BH_TFPERSON_H
 
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
@@ -18,13 +18,15 @@
 #include "tf2_ros/transform_broadcaster.h"
 #include "tf2/LinearMath/Quaternion.h"
 
-namespace visual_behaviour
+#include "ros/ros.h"
+
+namespace visual_bh
 {
 
-class Data_tf
+class Tfperson
 {
   public:
-    Data_tf(bool update);
+    Tfperson(bool update);
 
     bool get_update() {return update_;}
     geometry_msgs::TransformStamped generate_tf();
@@ -35,6 +37,7 @@ class Data_tf
     float y_;
     bool update_;
 };
+
 }
 
 #endif  // VISUAL_BEHAVIOUR_ASIMROS_DATA_TF_H

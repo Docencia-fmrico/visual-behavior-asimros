@@ -1,3 +1,5 @@
+#include "visual_bh/Tfperson.h"
+
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
@@ -15,17 +17,18 @@
 #include "tf2_ros/transform_broadcaster.h"
 #include "tf2/LinearMath/Quaternion.h"
 
-#include "visual_behaviour/Data_tf.h"
+#include "ros/ros.h"
 
-namespace visual_behaviour
+namespace visual_bh
 {
 
-Data_tf::Data_tf(bool update)
+Tfperson::Tfperson(bool update)
 {
     update_ = update;
 }
 
-geometry_msgs::TransformStamped Data_tf::generate_tf()
+geometry_msgs::TransformStamped 
+Tfperson::generate_tf()
 {
     tf2::Stamped<tf2::Transform> object;
     object.frame_id_ = "base_footprint";
@@ -47,7 +50,8 @@ geometry_msgs::TransformStamped Data_tf::generate_tf()
     return object_msg;
 }
 
-void Data_tf::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
+void 
+Tfperson::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
 {
     cv_bridge::CvImagePtr img_ptr_depth;
 
@@ -71,5 +75,6 @@ void Data_tf::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darkne
         std::cerr << "estoy en el callback" << std::endl;
     }
 }
+
 }
 

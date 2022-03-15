@@ -1,3 +1,5 @@
+#include "visual_bh/Tfperson.h"
+
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
@@ -15,7 +17,7 @@
 #include "tf2_ros/transform_broadcaster.h"
 #include "tf2/LinearMath/Quaternion.h"
 
-#include "visual_behaviour/Data_tf.h"
+#include "ros/ros.h"
 
 #define OBJ_PUB_RATE  10.0
 
@@ -31,20 +33,20 @@ int main(int argc, char** argv)
   typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, darknet_ros_msgs::BoundingBoxes> MySyncPolicy_bbx;
   message_filters::Synchronizer<MySyncPolicy_bbx> sync_bbx(MySyncPolicy_bbx(10), image_depth_sub, bbx_sub);
 
-  Data_tf data_tf(false);
+  visual_bh::Tfperson tf_person(false);
   tf2_ros::TransformBroadcaster br;
   geometry_msgs::TransformStamped bf2person;
   ros::Rate loop_rate(20);
 
-  sync_bbx.registerCallback(boost::bind(&data_tf.callback_bbx, _1, _2));
+  sync_bbx.registerCallback(boost::bind(&(tf_person.callback_bbx), _1, _2));
   
   while(ros::ok)
   {
-    if (data_tf.get_update())
+    if (tf_person.get_update())
     {
       try
       {
-        bf2person = data_tf.generate_tf();
+        bf2person = tf_person.generate_tf();
         bf2person.header.stamp = ros::Time::now();
         br.sendTransform(bf2person);
       }
@@ -57,4 +59,6 @@ int main(int argc, char** argv)
     ros::spinOnce();
     loop_rate.sleep();
   }
+
+  return 0;
 }
