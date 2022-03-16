@@ -33,6 +33,7 @@ class Tfperson
     void callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
   private:
+    ros::NodeHandle nh;
     float x_;
     float y_;
     bool update_;

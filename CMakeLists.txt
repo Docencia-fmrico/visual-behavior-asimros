@@ -48,10 +48,7 @@ add_library(${PROJECT_NAME}
 )
 
 add_executable(node_tf_person src/node_tf_person.cpp)
-
-target_link_libraries(node_tf_person ${catkin_LIBRARIES} ${PROJECT_NAME})
-
-set(ROSLINT_CPP_OPTS "--filter=-runtime/printf")
+target_link_libraries(node_tf_person ${PROJECT_NAME} ${catkin_LIBRARIES})
 
 roslint_cpp(
   src/node_tf_person.cpp

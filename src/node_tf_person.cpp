@@ -25,23 +25,14 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "pub_tf_person");
 
-  ros::NodeHandle nh;
-
-  message_filters::Subscriber<sensor_msgs::Image> image_depth_sub(nh, "/camera/depth/image_raw", 1);
-  message_filters::Subscriber<darknet_ros_msgs::BoundingBoxes> bbx_sub(nh, "/darknet_ros/bounding_boxes", 1);
-
-  typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, darknet_ros_msgs::BoundingBoxes> MySyncPolicy_bbx;
-  message_filters::Synchronizer<MySyncPolicy_bbx> sync_bbx(MySyncPolicy_bbx(10), image_depth_sub, bbx_sub);
-
   visual_bh::Tfperson tf_person(false);
   tf2_ros::TransformBroadcaster br;
   geometry_msgs::TransformStamped bf2person;
-  ros::Rate loop_rate(20);
-
-  sync_bbx.registerCallback(boost::bind(&(tf_person.callback_bbx), _1, _2));
+  ros::Rate loop_rate(10);
   
   while(ros::ok)
   {
+    ROS_INFO("holis");
     if (tf_person.get_update())
     {
       try
@@ -55,8 +46,8 @@ int main(int argc, char** argv)
         ROS_ERROR("%s", exception.what());
       }
     }
-
-    ros::spinOnce();
+    ROS_INFO("holis");
+    ros::spin();
     loop_rate.sleep();
   }
 
