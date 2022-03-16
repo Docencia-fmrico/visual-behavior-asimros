@@ -33,11 +33,17 @@ PIDController::PIDController(double min_ref, double max_ref, double min_output, 
 }
 
 void
-PIDController::set_pid(double n_KP, double n_KI, double n_KD)
+PIDController::set_pid(double min_ref, double max_ref, double min_output, double max_output)
 {
-  KP_ = n_KP;
-  KI_ = n_KI;
-  KD_ = n_KD;
+  min_ref_ = min_ref;
+  max_ref_ = max_ref;
+  min_output_ = min_output;
+  max_output_ = max_output;
+  prev_error_ = int_error_ = 0.0;
+
+  KP_ = 0.41;
+  KI_ = 0.06;
+  KD_ = 0.53;
 }
 
 double

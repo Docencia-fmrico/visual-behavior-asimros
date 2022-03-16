@@ -27,6 +27,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <string>
+#include "behavior_trees/FollowPoint.h"
+#include "behaviortree_cpp_v3/behavior_tree.h"
+#include "ros/ros.h"
+
 #include "tf2/transform_datatypes.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2/LinearMath/Transform.h"
@@ -34,16 +39,7 @@
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
-
-//#include "br2_tracking/PIDController.hpp"
-
-#include <string>
-
-#include "behavior_trees/FollowPoint.h"
-
-#include "behaviortree_cpp_v3/behavior_tree.h"
-
-#include "ros/ros.h"
+#include "br2_tracking/PIDController.hpp"
 
 namespace behavior_trees
 {
@@ -63,9 +59,27 @@ FollowPoint::halt()
 BT::NodeStatus
 FollowPoint::tick()
 {
+  tf2_ros::Buffer buffer;
+  tf2_ros::TransformListener listener(buffer);
 
-  ROS_INFO("Following point");
-  return BT::NodeStatus::SUCCESS;
+  if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
+  {
+    bf2ball_msg = buffer.lookupTransform("base_footprint", "ball/0", ros::Time(0));
+
+    tf2::fromMsg(bf2ball_msg, bf2ball);
+
+    double dist = bf2ball.getOrigin().length();
+    double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
+    vel_msgs_.linear.x = dist -1.0;
+    vel_msgs_.angular.z = angle;
+    vel_pub_.publish(vel_msgs_);
+    return BT::NodeStatus::RUNNING;
+
+  }
+  else
+  {
+    return BT::NodeStatus::FAILURE;
+  } 
 }
 
 }  // namespace behavior_treesS

@@ -24,9 +24,10 @@ namespace br2_tracking
 class PIDController
 {
 public:
+  PIDController();
   PIDController(double min_ref, double max_ref, double min_output, double max_output);
 
-  void set_pid(double n_KP, double n_KI, double n_KD);
+  void set_pid(double min_ref, double max_ref, double min_output, double max_output);
   double get_output(double new_reference);
 
 private:
