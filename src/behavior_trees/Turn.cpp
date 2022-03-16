@@ -28,6 +28,7 @@ namespace behavior_trees
 Turn::Turn(const std::string& name)
 : BT::ActionNodeBase(name, {})
 {
+  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
 }
 
 void
@@ -41,23 +42,10 @@ Turn::tick()
 {
   geometry_msgs::Twist cmd;
 
-  cmd.linear.y = 0.0;
-  cmd.angular.x = 0.0;
-  cmd.angular.y = 0.0;
-
-  turn_ts_ = ros::Time::now();
-  cmd.angular.z = turning_speed_;
-
-  if((ros::Time::now()-turn_ts_).toSec() > TURNING_TIME )
-  {
-    cmd.linear.z = 0.0;
-    return BT::NodeStatus::SUCCESS;
-  }
-  else
-  {
-    return BT::NodeStatus::RUNNING;
-  }
-
+  cmd.linear.x = 0.0;
+  cmd.angular.z = angspeed_;
+  vel_pub_.publish(cmd);
+  return BT::NodeStatus::RUNNING;
 }
 
 }  // namespace behavior_trees

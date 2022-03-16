@@ -1,5 +1,5 @@
 <launch>
-	<node pkg="visual-behaviour-asimros" type="image_filter_node" name="image_filter_node" output="screen"></node>
+	<node pkg="visual-behavior-asimros" type="image_filter_node" name="image_filter_node" output="screen"></node>
 	<node pkg="cameras_cpp" type="nodo_rgbd_filter" name="cloud_filter_node" output="screen"></node>
-	<node pkg="visual-behaviour-asimros" type="tf_ball_node" name="tf_ball_node" output="screen"></node>
+	<node pkg="visual-behavior-asimros" type="tf_ball_node" name="tf_ball_node" output="screen"></node>
 </launch>

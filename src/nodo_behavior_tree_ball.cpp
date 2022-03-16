@@ -53,7 +53,6 @@ int main(int argc, char **argv)
   while (ros::ok() && !finish)
   {
     tree.rootNode()->executeTick();
-
     ros::spinOnce();
     loop_rate.sleep();
   }
