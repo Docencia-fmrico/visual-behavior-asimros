@@ -38,7 +38,7 @@ class Turn : public BT::ActionNodeBase
   private:
     ros::NodeHandle nh_;
     ros::Publisher vel_pub_;
-    float angspeed_ = 0.5;
+    float angspeed_ = 1.0;
 };
 
 }  // namespace behavior_trees
