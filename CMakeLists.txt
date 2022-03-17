@@ -11,8 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   cv_bridge
   image_transport
-  pcl_conversions
-  pcl_ros
   darknet_ros_msgs
   geometry_msgs
 )
@@ -35,7 +33,6 @@ CATKIN_DEPENDS
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${PCL_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -48,11 +45,11 @@ add_library(${PROJECT_NAME}
   src/visual_bh/Pos_person.cpp
 )
 
-#add_executable(node_follow_person src/node_follow_person.cpp)
-#target_link_libraries(node_follow_person ${catkin_LIBRARIES} ${PROJECT_NAME})
+add_executable(node_follow_person src/node_follow_person.cpp)
+target_link_libraries(node_follow_person ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 roslint_cpp(
-  #src/node_follow_person.cpp
+  src/node_follow_person.cpp
   src/visual_bh/Pos_person.cpp
   include/visual_bh/Pos_person.h
 )
