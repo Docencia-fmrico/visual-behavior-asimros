@@ -33,6 +33,7 @@ int main(int argc, char **argv)
   BT::SharedLibrary loader;
 
   factory.registerFromPlugin(loader.getOSName("asr_find_person_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_follow_person_node"));
   factory.registerFromPlugin(loader.getOSName("asr_turn_node"));
   factory.registerFromPlugin(loader.getOSName("asr_follow_point_node"));
 

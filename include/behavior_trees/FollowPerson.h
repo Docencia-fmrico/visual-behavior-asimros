@@ -1,4 +1,3 @@
-
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,46 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <string>
-
-#include "behavior_trees/FindPerson.h"
+#ifndef BEHAVIOR_TREES_FOLLOWPERSON_H
+#define BEHAVIOR_TREES_FOLLOWPERSON_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
+#include "behaviortree_cpp_v3/bt_factory.h"
+#include "visual_bh/Pos_person.h"
+#include "br2_tracking/PIDController.hpp"
+#include "geometry_msgs/Twist.h"
+#include <string>
 
 #include "ros/ros.h"
 
 namespace behavior_trees
 {
 
-FindPerson::FindPerson(const std::string& name)
-: BT::ActionNodeBase(name, {})
+class FollowPerson : public BT::ActionNodeBase
 {
-}
+  public:
+    explicit FollowPerson(const std::string& name);
 
-void
-FindPerson::halt()
-{
-  ROS_INFO("FindPerson halt");
-}
+    void halt();
 
-BT::NodeStatus
-FindPerson::tick()
-{
-  dist_ = pos_person.x();
-  y_ = pos_person.y();
-  if(!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
-  {
-    return BT::NodeStatus::SUCCESS;
-  }
-  else {
-    return BT::NodeStatus::FAILURE;
-  }
-}
+    BT::NodeStatus tick();
+
+  private:
+    ros::NodeHandle nh_;
+    ros::Publisher vel_pub_;
+    geometry_msgs::Twist vel_msgs_;
+    visual_bh::Pos_person pos_person;
+    br2_tracking::PIDController* pos_pid_;
+    br2_tracking::PIDController* angle_pid_;
+    double dist_;
+    double y_;
+};
 
 }  // namespace behavior_trees
 
-#include "behaviortree_cpp_v3/bt_factory.h"
-BT_REGISTER_NODES(factory)
-{
-  factory.registerNodeType<behavior_trees::FindPerson>("FindPerson");
-}
+#endif  // BEHAVIOR_TREES_FOLLOWPERSON_H

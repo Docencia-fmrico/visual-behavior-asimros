@@ -26,10 +26,15 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   darknet_ros_msgs
   geometry_msgs
+  pcl_conversions
+  pcl_ros
 )
 
+find_package(OpenCV)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 catkin_package(
-  CATKIN_DEPENDS 
+CATKIN_DEPENDS 
   roscpp 
   std_msgs 
   behaviortree_cpp_v3
@@ -56,21 +61,23 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_library(asr_find_ball_node SHARED src/behavior_trees/FindBall.cpp)
 add_library(asr_find_person_node SHARED src/behavior_trees/FindPerson.cpp)
+add_library(asr_follow_person_node SHARED src/behavior_trees/FollowPerson.cpp)
 add_library(asr_turn_node SHARED src/behavior_trees/Turn.cpp)
 add_library(asr_follow_point_node SHARED src/behavior_trees/FollowPoint.cpp)
 list(APPEND plugin_libs
   asr_find_ball_node
   asr_find_person_node
+  asr_follow_person_node
   asr_turn_node
   asr_follow_point_node
 )
 
 foreach(bt_plugin ${plugin_libs})
-  target_link_libraries(${bt_plugin} ${PROJECT_NAME} ${catkin_LIBRARIES})
+  target_link_libraries(${bt_plugin} ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} )
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
-add_library(${PROJECT_NAME}(
+add_library(${PROJECT_NAME}
   src/visual_bh/Pos_person.cpp
   src/br2_tracking/PIDController.cpp
   src/ball_positioning/image_filter.cpp
@@ -88,9 +95,9 @@ add_executable(tf_ball_node src/tf_ball_node.cpp)
 target_link_libraries(tf_ball_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 add_executable(nodo_behavior_tree_ball src/nodo_behavior_tree_ball.cpp)
-target_link_libraries(nodo_behavior_tree_ball ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
+target_link_libraries(nodo_behavior_tree_ball ${PROJECT_NAME} ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
 add_executable(nodo_behavior_tree_person src/nodo_behavior_tree_person.cpp)
-target_link_libraries(nodo_behavior_tree_person ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
+target_link_libraries(nodo_behavior_tree_person ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${ZMQ_LIBRARIES})
 
 add_executable(follow_example src/follow_example.cpp)
 target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
@@ -105,6 +112,7 @@ roslint_cpp(
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
   src/nodo_behavior_tree_person.cpp
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
+  include/behavior_trees/FollowPerson.h src/behavior_trees/FollowPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
   include/br2_tracking/PIDController.hpp
