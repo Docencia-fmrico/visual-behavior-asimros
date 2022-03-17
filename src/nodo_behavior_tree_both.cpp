@@ -26,7 +26,7 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "behavior_tree");
+  ros::init(argc, argv, "behavior_tree_both");
   ros::NodeHandle n;
 
   BT::BehaviorTreeFactory factory;
@@ -35,12 +35,14 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_find_person_node"));
   factory.registerFromPlugin(loader.getOSName("asr_follow_person_node"));
   factory.registerFromPlugin(loader.getOSName("asr_turn_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_follow_point_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_find_ball_node"));
 
   auto blackboard = BT::Blackboard::create();
 
   std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
   
-  std::string xml_file = pkgpath + "/behavior_trees_xml/tree_person.xml";
+  std::string xml_file = pkgpath + "/behavior_trees_xml/tree_both.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
   auto publisher_zmq = std::make_shared<BT::PublisherZMQ>(tree, 10, 1666, 1667);
