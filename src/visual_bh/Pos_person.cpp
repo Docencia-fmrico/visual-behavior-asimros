@@ -25,7 +25,7 @@ void
 Pos_person::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
 {
     cv_bridge::CvImagePtr img_ptr_depth;
-    ROS_INFO("estoy en el callback");
+    
     try{
         img_ptr_depth = cv_bridge::toCvCopy(*image, sensor_msgs::image_encodings::TYPE_32FC1);
     }

@@ -18,30 +18,32 @@
 
 double angular_velocity(double y)
 {
-  //340 la mitad
-  if(y > 340 ) {
-    if(y - 340 < 50){
+  double middle = 340;
+
+  if(y > middle) {
+    if(y - middle < 50){
+      return -0.1; 
+    } else{
+      return -0.3;  
+    }
+  } else{
+    if(middle - y < 50){
       return 0.1;
     } else{
       return 0.3;
     }
-  } else{
-    if(340 - y < 50){
-      return -0.1;
-    } else{
-      return -0.3;
-    }
   }
-
 }
 
 int main(int argc, char** argv)
 {
+  ros::init(argc, argv, "pub_pos_person");
+
   ros::NodeHandle n;
   geometry_msgs::Twist cmd;
-  ros::init(argc, argv, "pub_tf_person"); 
+ 
   visual_bh::Pos_person pos_person;
-  ros::Publisher pub_vel_;
+  ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
   ros::Rate loop_rate(10);  
 
   cmd.linear.y = 0.0;
@@ -54,10 +56,16 @@ int main(int argc, char** argv)
     //if comprobar si time es reciente
     double dist = pos_person.x();
     double y = pos_person.y();
-    cmd.linear.x = dist - 1.0;
-    cmd.linear.y = angular_velocity(y);
-    pub_vel_.publish(cmd);
-    ros::spin();
+    ROS_INFO("%f, %f", dist, y);
+
+    if(!std::isnan(dist))
+    {
+      cmd.linear.x = dist - 1.0;
+      cmd.angular.z = angular_velocity(y);
+      pub_vel.publish(cmd);
+    }
+
+    ros::spinOnce();
     loop_rate.sleep();
   }
 
