@@ -7,6 +7,7 @@
 
 #include <sensor_msgs/Image.h>
 #include <darknet_ros_msgs/BoundingBoxes.h>
+#include "br2_tracking/PIDController.hpp"
 
 #include <visual_bh/Pos_person.h>
 
@@ -45,7 +46,8 @@ int main(int argc, char** argv)
   visual_bh::Pos_person pos_person;
   ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
   ros::Rate loop_rate(10);  
-
+  br2_tracking::PIDController vel_pid(0.0, 2.0, 0, 0.4);
+  br2_tracking::PIDController angle_pid(290, 390, 0.4, -0.4);
   cmd.linear.y = 0.0;
   cmd.linear.z = 0.0;
   cmd.angular.x = 0.0;
@@ -54,16 +56,20 @@ int main(int argc, char** argv)
   while(ros::ok)
   {    
     //if comprobar si time es reciente
-    double dist = pos_person.x();
+    double dist = pos_person.x() / 1000;
     double y = pos_person.y();
-    ROS_INFO("%f, %f", dist, y);
-
-    if(!std::isnan(dist))
+    if(!std::isnan(dist) && !(dist <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
     {
-      cmd.linear.x = dist - 1.0;
+      ROS_INFO("%f, %f", dist, y);
+      cmd.linear.x = vel_pid.get_output(dist - 1.0);
       cmd.angular.z = angular_velocity(y);
-      pub_vel.publish(cmd);
     }
+    else {
+      cmd.linear.x = 0.0;
+      cmd.angular.z = 0.3;
+    }
+
+    pub_vel.publish(cmd);
 
     ros::spinOnce();
     loop_rate.sleep();

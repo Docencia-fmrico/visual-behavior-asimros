@@ -21,6 +21,7 @@ class Pos_person
     Pos_person();
 
     double x() {return x_;}
+    ros::Time getTime() {return time_;}
     double y() {return y_;}
     void callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
@@ -29,6 +30,7 @@ class Pos_person
 
     double x_;
     double y_;
+    ros::Time time_;
 
     message_filters::Subscriber<sensor_msgs::Image> image_depth_sub;
     message_filters::Subscriber<darknet_ros_msgs::BoundingBoxes> bbx_sub;

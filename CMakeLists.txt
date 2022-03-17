@@ -43,6 +43,7 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_library(${PROJECT_NAME}
   src/visual_bh/Pos_person.cpp
+  src/br2_tracking/PIDController.cpp
 )
 
 add_executable(node_follow_person src/node_follow_person.cpp)

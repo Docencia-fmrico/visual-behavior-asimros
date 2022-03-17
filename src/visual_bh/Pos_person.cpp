@@ -18,6 +18,8 @@ Pos_person::Pos_person()
 : image_depth_sub(nh, "/camera/depth/image_raw", 1), bbx_sub(nh, "/darknet_ros/bounding_boxes", 1), 
 sync_bbx(MySyncPolicy_bbx(10), image_depth_sub, bbx_sub)
 {
+    x_ = 1.0;
+    y_ = 340;
     sync_bbx.registerCallback(boost::bind(&Pos_person::callback_bbx, this, _1, _2));
 }
 
@@ -41,6 +43,7 @@ Pos_person::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_
 
         x_ = img_ptr_depth->image.at<float> (cv::Point(px, py));
         y_ = px;
+        time_ = ros::Time::now();
     }
 }
 
