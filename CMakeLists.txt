@@ -44,9 +44,15 @@ link_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
-add_executable(node_follow_person src/node_follow_person.cpp)
-target_link_libraries(node_follow_person ${catkin_LIBRARIES})
+add_library(${PROJECT_NAME}
+  src/visual_bh/Pos_person.cpp
+)
+
+#add_executable(node_follow_person src/node_follow_person.cpp)
+#target_link_libraries(node_follow_person ${catkin_LIBRARIES} ${PROJECT_NAME})
 
 roslint_cpp(
-  src/node_pos_person.cpp
+  #src/node_follow_person.cpp
+  src/visual_bh/Pos_person.cpp
+  include/visual_bh/Pos_person.h
 )
