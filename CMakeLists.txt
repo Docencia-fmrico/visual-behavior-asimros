@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(visual_bh)
+project(visual-behaviour-asimros)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
   pcl_ros
   darknet_ros_msgs
+  geometry_msgs
 )
 
 find_package(OpenCV)
@@ -43,15 +44,9 @@ link_directories(
 
 add_definitions(${PCL_DEFINITIONS})
 
-add_library(${PROJECT_NAME}
- src/visual_bh/Tfperson.cpp
-)
-
-add_executable(node_tf_person src/node_tf_person.cpp)
-target_link_libraries(node_tf_person ${PROJECT_NAME} ${catkin_LIBRARIES})
+add_executable(node_follow_person src/node_follow_person.cpp)
+target_link_libraries(node_follow_person ${catkin_LIBRARIES})
 
 roslint_cpp(
-  src/node_tf_person.cpp
-  src/visual_bh/Tfperson.cpp
-  include/visual_bh/Tfperson.h
+  src/node_pos_person.cpp
 )
