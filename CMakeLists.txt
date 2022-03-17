@@ -26,6 +26,8 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   darknet_ros_msgs
   geometry_msgs
+  pcl_conversions
+  pcl_ros
 )
 
 catkin_package(
@@ -70,7 +72,7 @@ foreach(bt_plugin ${plugin_libs})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
-add_library(${PROJECT_NAME}(
+add_library(${PROJECT_NAME}
   src/visual_bh/Pos_person.cpp
   src/br2_tracking/PIDController.cpp
   src/ball_positioning/image_filter.cpp
