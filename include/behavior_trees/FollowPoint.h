@@ -48,6 +48,8 @@ class FollowPoint : public BT::ActionNodeBase
     geometry_msgs::TransformStamped bf2ball_msg;
     tf2::Stamped<tf2::Transform> bf2ball;
     std::string error;
+    br2_tracking::PIDController* pos_pid_;
+    br2_tracking::PIDController* angle_pid_;
 };
 
 }  // namespace behavior_trees

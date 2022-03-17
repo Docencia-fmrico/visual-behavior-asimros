@@ -67,7 +67,7 @@ list(APPEND plugin_libs
 )
 
 foreach(bt_plugin ${plugin_libs})
-  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+  target_link_libraries(${bt_plugin} ${PROJECT_NAME} ${catkin_LIBRARIES})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 

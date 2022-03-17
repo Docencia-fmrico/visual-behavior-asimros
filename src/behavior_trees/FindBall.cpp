@@ -45,6 +45,7 @@ FindBall::halt()
 BT::NodeStatus
 FindBall::tick()
 { 
+  tf2_ros::Buffer buffer;
   tf2_ros::TransformListener listener(buffer);
   if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
   {
