@@ -9,7 +9,7 @@
 #include <darknet_ros_msgs/BoundingBoxes.h>
 #include "br2_tracking/PIDController.hpp"
 
-#include <visual_bh/Pos_person.h>
+#include "visual_bh/Pos_person.h"
 
 #include "ros/ros.h"
 
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
   while(ros::ok)
   {    
     //if comprobar si time es reciente
-    double dist = pos_person.x() / 1000;
+    double dist = pos_person.x();
     double y = pos_person.y();
     if(!std::isnan(dist) && !(dist <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
     {

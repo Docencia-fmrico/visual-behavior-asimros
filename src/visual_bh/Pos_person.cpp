@@ -41,7 +41,7 @@ Pos_person::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_
         int px = (box.xmax + box.xmin) / 2;
         int py = (box.ymax + box.ymin) / 2;
 
-        x_ = img_ptr_depth->image.at<float> (cv::Point(px, py));
+        x_ = img_ptr_depth->image.at<float>(cv::Point(px, py));
         y_ = px;
         time_ = ros::Time::now();
     }

@@ -17,7 +17,7 @@
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
-
+#include "visual_bh/Pos_person.h"
 #include <string>
 
 #include "ros/ros.h"
@@ -36,7 +36,9 @@ class FindPerson : public BT::ActionNodeBase
 
 
   private:
-    //toDo
+    double dist_;
+    double y_;
+    visual_bh::Pos_person pos_person;
 };
 
 }  // namespace behavior_trees
