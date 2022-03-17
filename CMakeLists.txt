@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(visual-behaviour-asimros)
+project(visual-behavior-asimros)
 set(CMAKE_CXX_FLAGS "-std=c++17")
 
 set(CMAKE_CONFIG_PATH ${CMAKE_MODULE_PATH}  "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -19,17 +19,41 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   behaviortree_cpp_v3
   roslint
+  roslint
+  sensor_msgs
+  tf
+  cv_bridge
+  image_transport
+  pcl_conversions
+  pcl_ros
+  darknet_ros_msgs
 )
 
 catkin_package(
-CATKIN_DEPENDS roscpp std_msgs behaviortree_cpp_v3
+  CATKIN_DEPENDS 
+  roscpp 
+  std_msgs 
+  behaviortree_cpp_v3
+  sensor_msgs
+  tf
+  cv_bridge
+  image_transport
+  pcl_conversions
+  pcl_ros
 )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
   ${ZMQ_INCLUDE_DIRS}
 )
+
+link_directories(
+	${PCL_LIBRARY_DIRS}
+)
+
+add_definitions(${PCL_DEFINITIONS})
 
 add_library(asr_find_ball_node SHARED src/behavior_trees/FindBall.cpp)
 add_library(asr_find_person_node SHARED src/behavior_trees/FindPerson.cpp)
@@ -43,7 +67,7 @@ list(APPEND plugin_libs
 )
 
 foreach(bt_plugin ${plugin_libs})
-  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+  target_link_libraries(${bt_plugin} ${PROJECT_NAME} ${catkin_LIBRARIES})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
@@ -63,13 +87,9 @@ target_link_libraries(cloud_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${Op
 add_executable(tf_ball_node src/tf_ball_node.cpp)
 target_link_libraries(tf_ball_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_executable(nodo_behavior_tree_ball
-  src/nodo_behavior_tree_ball.cpp
-)
-add_executable(nodo_behavior_tree_person
-  src/nodo_behavior_tree_person.cpp
-)
+add_executable(nodo_behavior_tree_ball src/nodo_behavior_tree_ball.cpp)
 target_link_libraries(nodo_behavior_tree_ball ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
+add_executable(nodo_behavior_tree_person src/nodo_behavior_tree_person.cpp)
 target_link_libraries(nodo_behavior_tree_person ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
 
 add_executable(follow_example src/follow_example.cpp)

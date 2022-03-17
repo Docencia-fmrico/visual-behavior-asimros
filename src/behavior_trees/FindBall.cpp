@@ -14,12 +14,18 @@
 // limitations under the License.
 
 #include <string>
-
 #include "behavior_trees/FindBall.h"
-
 #include "behaviortree_cpp_v3/behavior_tree.h"
-
 #include "ros/ros.h"
+
+#include "tf2/transform_datatypes.h"
+#include "tf2_ros/transform_listener.h"
+#include "tf2/LinearMath/Transform.h"
+#include "geometry_msgs/TransformStamped.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+#include "geometry_msgs/Twist.h"
+#include "tf2/convert.h"
+#include "br2_tracking/PIDController.hpp"
 
 namespace behavior_trees
 {
@@ -38,9 +44,16 @@ FindBall::halt()
 
 BT::NodeStatus
 FindBall::tick()
-{
-  ROS_INFO("Checking ball");
-  return BT::NodeStatus::SUCCESS;
+{ 
+  tf2_ros::Buffer buffer;
+  tf2_ros::TransformListener listener(buffer);
+  if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
+  {
+    ROS_INFO("He visto la bola");
+    return BT::NodeStatus::SUCCESS;
+  }
+  ROS_INFO("No he visto la bola");
+  return BT::NodeStatus::FAILURE;
 }
 
 }  // namespace behavior_trees

@@ -15,10 +15,11 @@
 #ifndef BEHAVIOR_TREES_FOLLOWPOINT_H
 #define BEHAVIOR_TREES_FOLLOWPOINT_H
 
+#include <string>
+#include "behavior_trees/FindBall.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
+#include "ros/ros.h"
 
-//#include "br2_tracking/PIDController.hpp"
 #include "tf2/transform_datatypes.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2/LinearMath/Transform.h"
@@ -26,11 +27,7 @@
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
-
-
-#include <string>
-
-#include "ros/ros.h"
+#include "br2_tracking/PIDController.hpp"
 
 namespace behavior_trees
 {
@@ -47,6 +44,12 @@ class FollowPoint : public BT::ActionNodeBase
   private:
     ros::NodeHandle nh_;
     ros::Publisher vel_pub_;
+    geometry_msgs::Twist vel_msgs_;
+    geometry_msgs::TransformStamped bf2ball_msg;
+    tf2::Stamped<tf2::Transform> bf2ball;
+    std::string error;
+    br2_tracking::PIDController* pos_pid_;
+    br2_tracking::PIDController* angle_pid_;
 };
 
 }  // namespace behavior_trees

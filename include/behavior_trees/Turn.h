@@ -36,15 +36,9 @@ class Turn : public BT::ActionNodeBase
 
 
   private:
-    //toDo
+    ros::NodeHandle nh_;
     ros::Publisher vel_pub_;
-    float turning_speed_ = 0.5;
-
-    static constexpr double TURNING_TIME = 0.5;
-
-
-    ros::Time turn_ts_;
-
+    float angspeed_ = 0.5;
 };
 
 }  // namespace behavior_trees
