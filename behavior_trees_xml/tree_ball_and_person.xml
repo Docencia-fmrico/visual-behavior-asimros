@@ -1,7 +1,8 @@
-<root main_tree_to_execute="person_bt">
-  <BehaviorTree ID="person_bt">
+<root main_tree_to_execute="ball_bt">
+  <BehaviorTree ID="ball_bt">
        <Sequence name="root_rsequence">
-           <ReactiveFallback name="person_seen">
+           <ReactiveFallback name="ball_or_person_seen">
+               <FindBall name="ball_seen"/>
                <FindPerson name="person_seen"/>
                <Turn name="turn"/>
            </ReactiveFallback>
