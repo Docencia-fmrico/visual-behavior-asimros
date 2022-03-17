@@ -24,9 +24,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   cv_bridge
   image_transport
-  pcl_conversions
-  pcl_ros
   darknet_ros_msgs
+  geometry_msgs
 )
 
 catkin_package(
@@ -71,11 +70,12 @@ foreach(bt_plugin ${plugin_libs})
   target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
 endforeach()
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME}(
+  src/visual_bh/Pos_person.cpp
+  src/br2_tracking/PIDController.cpp
   src/ball_positioning/image_filter.cpp
   src/ball_positioning/cloud_filter.cpp
   src/ball_positioning/tf_ball.cpp
-  src/br2_tracking/PIDController.cpp  
 )
 
 add_executable(image_filter_node src/image_filter_node.cpp)
@@ -94,6 +94,9 @@ target_link_libraries(nodo_behavior_tree_person ${catkin_LIBRARIES} ${ZMQ_LIBRAR
 
 add_executable(follow_example src/follow_example.cpp)
 target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
+
+add_executable(node_follow_person src/node_follow_person.cpp)
+target_link_libraries(node_follow_person ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 roslint_cpp(
   src/nodo_behavior_tree_ball.cpp
@@ -116,4 +119,7 @@ roslint_cpp(
   src/cloud_filter_node.cpp
   src/tf_ball_node.cpp
   src/follow_example.cpp
+  src/node_follow_person.cpp
+  src/visual_bh/Pos_person.cpp
+  include/visual_bh/Pos_person.h
 )
