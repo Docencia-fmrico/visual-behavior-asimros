@@ -40,7 +40,7 @@ RGBDFilter::RGBDFilter()
   initHSV();
   cloud_sub_ = nh_.subscribe("/camera/depth/points", 1, &RGBDFilter::cloudCB, this);
 
-  if ( ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug) )
+  if (ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug) )
   {
       ros::console::notifyLoggerLevelsChanged();
   }
@@ -136,11 +136,9 @@ void RGBDFilter::initHSV()
     hsvFilters_[i].hsv_subs[IDX_V] = nh_.subscribe(topic_id, 1, &RGBDFilter::hsvCB, this);
 
     sprintf(topic_id, "/cloud_filtered/%d", i);
-    
+
     hsvFilters_[i].cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>("/cloud_filtered/0", 1, false);
   }
 }
 
-}
-
-
+}  // namespace ball_positioning

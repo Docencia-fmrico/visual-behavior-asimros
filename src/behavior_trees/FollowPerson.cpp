@@ -1,4 +1,3 @@
-
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,15 +42,15 @@ FollowPerson::tick()
 {
   dist_ = pos_person.x();
   y_ = pos_person.y();
-  if(!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
+
+  if (!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
   {
     vel_msgs_.linear.x = pos_pid_->get_output(dist_ - 1.0);
     vel_msgs_.angular.z = angle_pid_->get_output(340 - y_);
     vel_pub_.publish(vel_msgs_);
     return BT::NodeStatus::RUNNING;
-    
   }
-  else 
+  else
   {
     vel_msgs_.linear.x = 0.0;
     vel_msgs_.angular.z = 0.0;

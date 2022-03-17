@@ -27,7 +27,7 @@
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
-#include "br2_tracking/PIDController.hpp"
+#include "br2_tracking/PIDController.h"
 
 namespace behavior_trees
 {

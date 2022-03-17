@@ -57,6 +57,6 @@ public:
   void publishHSV();
 };
 
-} // namespace ball_positioning
+}  // namespace ball_positioning
 
-#endif // BALL_POSITIONING_IMAGE_FILTER_H
+#endif  // BALL_POSITIONING_IMAGE_FILTER_H

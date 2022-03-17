@@ -177,4 +177,4 @@ void ImageConverter::publishHSV()
   }
 }
 
-}
+}  // namespace ball_positioning

@@ -1,4 +1,3 @@
-
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +38,7 @@
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
-#include "br2_tracking/PIDController.hpp"
+#include "br2_tracking/PIDController.h"
 
 namespace behavior_trees
 {
@@ -77,15 +76,14 @@ FollowPoint::tick()
     vel_msgs_.angular.z = angle_pid_->get_output(angle);
     vel_pub_.publish(vel_msgs_);
     return BT::NodeStatus::RUNNING;
-
   }
   else
   {
     return BT::NodeStatus::FAILURE;
-  } 
+  }
 }
 
-}  // namespace behavior_treesS
+}  // namespace behavior_trees
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)

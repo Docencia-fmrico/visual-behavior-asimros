@@ -1,4 +1,3 @@
-
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +24,7 @@
 #include "tf2_geometry_msgs/tf2_geometry_msgs.h"
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
-#include "br2_tracking/PIDController.hpp"
+#include "br2_tracking/PIDController.h"
 
 namespace behavior_trees
 {
@@ -44,9 +43,10 @@ FindBall::halt()
 
 BT::NodeStatus
 FindBall::tick()
-{ 
+{
   tf2_ros::Buffer buffer;
   tf2_ros::TransformListener listener(buffer);
+
   if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
   {
     ROS_INFO("He visto la bola");

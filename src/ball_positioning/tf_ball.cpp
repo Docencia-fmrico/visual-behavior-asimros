@@ -120,4 +120,4 @@ void RGBDtf::cloudCB(const sensor_msgs::PointCloud2::ConstPtr& cloud_in)
   }
 }
 
-} // namespace ball_positioning
+}  // namespace ball_positioning

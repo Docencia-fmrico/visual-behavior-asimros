@@ -64,6 +64,6 @@ private:
   HSVInfo hsvFilters_[MAX_CHANNELS];
 };
 
-} // namespace ball_positioning
+}  // namespace ball_positioning
 
-#endif // BALL_POSITIONING_CLOUD_FILTER_H
+#endif  // BALL_POSITIONING_CLOUD_FILTER_H

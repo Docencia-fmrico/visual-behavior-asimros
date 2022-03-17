@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-#ifndef BR2_TRACKING__PIDCONTROLLER_HPP_
-#define BR2_TRACKING__PIDCONTROLLER_HPP_
+#ifndef BR2_TRACKING_PIDCONTROLLER_H_
+#define BR2_TRACKING_PIDCONTROLLER_H_
 
 #include <cmath>
 
@@ -40,4 +40,4 @@ private:
 
 }  // namespace br2_tracking
 
-#endif  // BR2_TRACKING__PIDCONTROLLER_HPP_
+#endif  // BR2_TRACKING_PIDCONTROLLER_H_

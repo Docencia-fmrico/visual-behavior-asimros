@@ -64,6 +64,6 @@ private:
   std::string cameraTopicId_;
 };
 
-} // namespace ball_positioning
+}  // namespace ball_positioning
 
-#endif // BALL_POSITIONING_TF_BALL_H
+#endif  // BALL_POSITIONING_TF_BALL_H

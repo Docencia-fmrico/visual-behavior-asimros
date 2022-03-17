@@ -18,7 +18,7 @@
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "visual_bh/Pos_person.h"
-#include "br2_tracking/PIDController.hpp"
+#include "br2_tracking/PIDController.h"
 #include "geometry_msgs/Twist.h"
 #include <string>
 

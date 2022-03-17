@@ -41,7 +41,7 @@ int main(int argc, char **argv)
   auto blackboard = BT::Blackboard::create();
 
   std::string pkgpath = ros::package::getPath("visual-behavior-asimros");
-  
+
   std::string xml_file = pkgpath + "/behavior_trees_xml/tree_both.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);

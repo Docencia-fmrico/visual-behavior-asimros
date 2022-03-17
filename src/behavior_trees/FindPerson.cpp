@@ -1,4 +1,3 @@
-
 // Copyright 2019 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,13 +37,15 @@ FindPerson::halt()
 BT::NodeStatus
 FindPerson::tick()
 {
-  dist_ = pos_person.x();
+  dist_ = pos_person.x() / 100;
   y_ = pos_person.y();
-  if(!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
+
+  if (!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
   {
     return BT::NodeStatus::SUCCESS;
   }
-  else {
+  else
+  {
     return BT::NodeStatus::FAILURE;
   }
 }

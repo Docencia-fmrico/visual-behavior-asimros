@@ -118,7 +118,7 @@ roslint_cpp(
   include/behavior_trees/FollowPerson.h src/behavior_trees/FollowPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
-  include/br2_tracking/PIDController.hpp
+  include/br2_tracking/PIDController.h
   src/br2_tracking/PIDController.cpp
   include/ball_positioning/image_filter.h
   src/ball_positioning/image_filter.cpp
