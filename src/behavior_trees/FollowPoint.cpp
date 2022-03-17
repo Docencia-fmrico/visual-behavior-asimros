@@ -48,9 +48,8 @@ FollowPoint::FollowPoint(const std::string& name)
 : BT::ActionNodeBase(name, {})
 {
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
-  ROS_INFO("Holis");
   pos_pid_ = new br2_tracking::PIDController(0.0, 2.0, 0, 0.4);
-  angle_pid_ = new br2_tracking::PIDController(0.0, 1.5, 0, 0.4);
+  angle_pid_ = new br2_tracking::PIDController(0.0, 1.5, 0, 1.0);
 }
 
 void
@@ -74,6 +73,7 @@ FollowPoint::tick()
     double dist = bf2ball.getOrigin().length();
     double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
     vel_msgs_.linear.x = pos_pid_->get_output(dist - 1.0);
+    ROS_INFO("%f",  angle_pid_->get_output(angle));
     vel_msgs_.angular.z = angle_pid_->get_output(angle);
     vel_pub_.publish(vel_msgs_);
     return BT::NodeStatus::RUNNING;
