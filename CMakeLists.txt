@@ -98,6 +98,8 @@ add_executable(nodo_behavior_tree_ball src/nodo_behavior_tree_ball.cpp)
 target_link_libraries(nodo_behavior_tree_ball ${PROJECT_NAME} ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
 add_executable(nodo_behavior_tree_person src/nodo_behavior_tree_person.cpp)
 target_link_libraries(nodo_behavior_tree_person ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${ZMQ_LIBRARIES})
+add_executable(nodo_behavior_tree_both src/nodo_behavior_tree_both.cpp)
+target_link_libraries(nodo_behavior_tree_both ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${ZMQ_LIBRARIES})
 
 add_executable(follow_example src/follow_example.cpp)
 target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
@@ -111,6 +113,7 @@ roslint_cpp(
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
   src/nodo_behavior_tree_person.cpp
+  src/nodo_behavior_tree_both.cpp
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
   include/behavior_trees/FollowPerson.h src/behavior_trees/FollowPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
