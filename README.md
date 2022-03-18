@@ -9,7 +9,9 @@ La práctica se compone de tres partes:
    3.  Behavior Trees para programar la lógica de control.
    4.  PIDs para la orientación y la distancia.
 2. Seguimiento visual de una persona: Similar al punto anterior, pero detectando a la persona con darket_ros.
-   1. Hace uso de Darknet y las bounding boxes
+   1. Hace uso de Darknet y las bounding boxes.
+   2. Uso de behaviour trees.
+   3. PIDs para la orientacion y distancia.
 4. Comportamiento mixto: El robot debe seguir tanto a las personas como a las pelotas que perciba con la cámara, teniendo prioridad la pelota.
 
 Entrega: Viernes 19 de Marzo.
