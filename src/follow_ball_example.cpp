@@ -22,7 +22,7 @@
 #include "geometry_msgs/Twist.h"
 #include "tf2/convert.h"
 
-#include "br2_tracking/PIDController.hpp"
+#include "br2_tracking/PIDController.h"
 
 #include "ros/ros.h"
 
@@ -46,6 +46,7 @@ int main(int argc, char **argv)
     geometry_msgs::TransformStamped bf2ball_msg;
     tf2::Stamped<tf2::Transform> bf2ball;
     std::string error;
+
     if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(0.2), &error))
     {
       bf2ball_msg = buffer.lookupTransform("base_footprint", "ball/0", ros::Time(0));
@@ -56,7 +57,6 @@ int main(int argc, char **argv)
       double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
       vel_msgs.linear.x = vel_pid.get_output(dist - 1.0);
       vel_msgs.angular.z = angle_pid.get_output(angle);
-
     }
     else
     {

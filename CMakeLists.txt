@@ -80,19 +80,7 @@ endforeach()
 add_library(${PROJECT_NAME}
   src/visual_bh/Pos_person.cpp
   src/br2_tracking/PIDController.cpp
-  src/ball_positioning/image_filter.cpp
-  src/ball_positioning/cloud_filter.cpp
-  src/ball_positioning/tf_ball.cpp
 )
-
-add_executable(image_filter_node src/image_filter_node.cpp)
-target_link_libraries(image_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-add_executable(cloud_filter_node src/cloud_filter_node.cpp)
-target_link_libraries(cloud_filter_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-add_executable(tf_ball_node src/tf_ball_node.cpp)
-target_link_libraries(tf_ball_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 add_executable(nodo_behavior_tree_ball src/nodo_behavior_tree_ball.cpp)
 target_link_libraries(nodo_behavior_tree_ball ${PROJECT_NAME} ${catkin_LIBRARIES} ${ZMQ_LIBRARIES})
@@ -101,11 +89,11 @@ target_link_libraries(nodo_behavior_tree_person ${PROJECT_NAME} ${catkin_LIBRARI
 add_executable(nodo_behavior_tree_both src/nodo_behavior_tree_both.cpp)
 target_link_libraries(nodo_behavior_tree_both ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${ZMQ_LIBRARIES})
 
-add_executable(follow_example src/follow_example.cpp)
-target_link_libraries(follow_example ${PROJECT_NAME} ${catkin_LIBRARIES})
+add_executable(follow_ball_example src/follow_ball_example.cpp)
+target_link_libraries(follow_ball_example ${PROJECT_NAME} ${catkin_LIBRARIES})
 
-add_executable(node_follow_person src/node_follow_person.cpp)
-target_link_libraries(node_follow_person ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_executable(follow_person_example src/follow_person_example.cpp)
+target_link_libraries(follow_person_example ${PROJECT_NAME} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 roslint_cpp(
   src/nodo_behavior_tree_ball.cpp
@@ -118,19 +106,10 @@ roslint_cpp(
   include/behavior_trees/FollowPerson.h src/behavior_trees/FollowPerson.cpp
   include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
-  include/br2_tracking/PIDController.hpp
+  include/br2_tracking/PIDController.h
   src/br2_tracking/PIDController.cpp
-  include/ball_positioning/image_filter.h
-  src/ball_positioning/image_filter.cpp
-  include/ball_positioning/cloud_filter.h
-  src/ball_positioning/cloud_filter.cpp
-  include/ball_positioning/tf_ball.h
-  src/ball_positioning/tf_ball.cpp
-  src/image_filter_node.cpp
-  src/cloud_filter_node.cpp
-  src/tf_ball_node.cpp
-  src/follow_example.cpp
-  src/node_follow_person.cpp
+  src/follow_ball_example.cpp
+  src/follow_person_example.cpp
   src/visual_bh/Pos_person.cpp
   include/visual_bh/Pos_person.h
 )
