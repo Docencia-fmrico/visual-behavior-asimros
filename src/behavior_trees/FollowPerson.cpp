@@ -40,7 +40,7 @@ FollowPerson::halt()
 BT::NodeStatus
 FollowPerson::tick()
 {
-  dist_ = pos_person.x();
+  dist_ = pos_person.x() / 100;
   y_ = pos_person.y();
 
   if (!std::isnan(dist_) && !(dist_ <= 0.0) && ((ros::Time::now()-pos_person.getTime()).toSec()) < 1.0)
