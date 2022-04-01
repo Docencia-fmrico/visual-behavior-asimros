@@ -44,11 +44,11 @@ namespace behavior_trees
 {
 
 FollowPoint::FollowPoint(const std::string& name)
-: BT::ActionNodeBase(name, {})
+: BT::ActionNodeBase(name, {}),
+  pos_pid_(0.0, 2.0, 0, 0.4), 
+  angle_pid_((0.0, 1.5, 0, 1.0);)
 {
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
-  pos_pid_ = new br2_tracking::PIDController(0.0, 2.0, 0, 0.4);
-  angle_pid_ = new br2_tracking::PIDController(0.0, 1.5, 0, 1.0);
 }
 
 void
@@ -60,27 +60,11 @@ FollowPoint::halt()
 BT::NodeStatus
 FollowPoint::tick()
 {
-  tf2_ros::Buffer buffer;
-  tf2_ros::TransformListener listener(buffer);
+  vel_msgs_.linear.x = pos_pid_->get_output(dist - 1.0);
+  vel_msgs_.angular.z = angle_pid_->get_output(angle);
+  vel_pub_.publish(vel_msgs_);
 
-  if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
-  {
-    bf2ball_msg = buffer.lookupTransform("base_footprint", "ball/0", ros::Time(0));
-
-    tf2::fromMsg(bf2ball_msg, bf2ball);
-
-    double dist = bf2ball.getOrigin().length();
-    double angle = atan2(bf2ball.getOrigin().y(), bf2ball.getOrigin().x());
-    vel_msgs_.linear.x = pos_pid_->get_output(dist - 1.0);
-    ROS_INFO("%f",  angle_pid_->get_output(angle));
-    vel_msgs_.angular.z = angle_pid_->get_output(angle);
-    vel_pub_.publish(vel_msgs_);
-    return BT::NodeStatus::RUNNING;
-  }
-  else
-  {
-    return BT::NodeStatus::FAILURE;
-  }
+  return BT::NodeStatus::SUCCESS;
 }
 
 }  // namespace behavior_trees

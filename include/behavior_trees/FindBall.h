@@ -44,6 +44,8 @@ class FindBall : public BT::ActionNodeBase
   private:
     ros::NodeHandle n;
     std::string error;
+    tf2_ros::Buffer buffer;
+    tf2_ros::TransformListener listener;
 };
 
 }  // namespace behavior_trees

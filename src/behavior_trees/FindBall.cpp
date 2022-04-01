@@ -30,7 +30,8 @@ namespace behavior_trees
 {
 
 FindBall::FindBall(const std::string& name)
-: BT::ActionNodeBase(name, {})
+: BT::ActionNodeBase(name, {}), 
+  listener(buffer);
 {
 }
 
@@ -44,9 +45,6 @@ FindBall::halt()
 BT::NodeStatus
 FindBall::tick()
 {
-  tf2_ros::Buffer buffer;
-  tf2_ros::TransformListener listener(buffer);
-
   if (buffer.canTransform("base_footprint", "ball/0", ros::Time(0), ros::Duration(1.0), &error))
   {
     ROS_INFO("He visto la bola");
