@@ -46,7 +46,7 @@ namespace behavior_trees
 FollowPoint::FollowPoint(const std::string& name)
 : BT::ActionNodeBase(name, {}),
   pos_pid_(0.0, 2.0, 0, 0.4), 
-  angle_pid_((0.0, 1.5, 0, 1.0);)
+  angle_pid_(0.0, 1.5, 0, 1.0)
 {
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
 }
@@ -60,8 +60,8 @@ FollowPoint::halt()
 BT::NodeStatus
 FollowPoint::tick()
 {
-  vel_msgs_.linear.x = pos_pid_->get_output(dist - 1.0);
-  vel_msgs_.angular.z = angle_pid_->get_output(angle);
+  vel_msgs_.linear.x = pos_pid_.get_output(dist - 1.0);
+  vel_msgs_.angular.z = angle_pid_.get_output(angle);
   vel_pub_.publish(vel_msgs_);
 
   return BT::NodeStatus::SUCCESS;

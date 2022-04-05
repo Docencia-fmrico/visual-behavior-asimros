@@ -59,8 +59,17 @@ Pos_person::callback_bbx(const sensor_msgs::ImageConstPtr& image, const darknet_
         int py = (box.ymax + box.ymin) / 2;
 
         x_ = img_ptr_depth->image.at<float>(cv::Point(px, py));
-        y_ = px;
+        double angleh_ = 320.0 / 60.0;
+        double angley_ = (px - 320.0) * angleh_;
         time_ = ros::Time::now();
+
+        tf::StampedTransform transform;
+        transform.setOrigin(tf::Vector3(x, y, z));
+        transform.setRotation(tf::Quaternion(0.0, 0.0, 0.0, 1.0));
+
+        transform.stamp_ = ros::Time::now();
+        transform.frame_id_ = workingFrameId_;
+        transform.child_frame_id_ = objectFrameId_;
     }
 }
 

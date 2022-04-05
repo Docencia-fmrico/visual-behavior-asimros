@@ -24,6 +24,10 @@
 #include <sensor_msgs/Image.h>
 #include <darknet_ros_msgs/BoundingBoxes.h>
 
+#include <tf/transform_broadcaster.h>
+#include <tf/transform_listener.h>
+#include <tf/message_filter.h>
+
 #include "ros/ros.h"
 
 namespace visual_bh
@@ -53,6 +57,7 @@ class Pos_person
     message_filters::Subscriber<sensor_msgs::Image> image_depth_sub;
     message_filters::Subscriber<darknet_ros_msgs::BoundingBoxes> bbx_sub;
     message_filters::Synchronizer<MySyncPolicy_bbx> sync_bbx;
+    tf::TransformBroadcaster tfBroadcaster_;
 };
 
 }  // namespace visual_bh
