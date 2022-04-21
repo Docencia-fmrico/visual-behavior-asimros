@@ -27,7 +27,7 @@
 // limitations under the License.
 
 #include <string>
-#include "behavior_trees/FollowPoint.h"
+#include "behavior_trees/FollowBall.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "ros/ros.h"
 
@@ -43,7 +43,7 @@
 namespace behavior_trees
 {
 
-FollowPoint::FollowPoint(const std::string& name)
+FollowBall::FollowBall(const std::string& name)
 : BT::ActionNodeBase(name, {})
 {
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 100);
@@ -52,13 +52,13 @@ FollowPoint::FollowPoint(const std::string& name)
 }
 
 void
-FollowPoint::halt()
+FollowBall::halt()
 {
-  ROS_INFO("FollowPoint halt");
+  ROS_INFO("FollowBall halt");
 }
 
 BT::NodeStatus
-FollowPoint::tick()
+FollowBall::tick()
 {
   tf2_ros::Buffer buffer;
   tf2_ros::TransformListener listener(buffer);
@@ -88,5 +88,5 @@ FollowPoint::tick()
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<behavior_trees::FollowPoint>("FollowPoint");
+  factory.registerNodeType<behavior_trees::FollowBall>("FollowBall");
 }

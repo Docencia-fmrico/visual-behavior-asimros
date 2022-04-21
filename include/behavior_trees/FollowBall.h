@@ -32,10 +32,10 @@
 namespace behavior_trees
 {
 
-class FollowPoint : public BT::ActionNodeBase
+class FollowBall : public BT::ActionNodeBase
 {
   public:
-    explicit FollowPoint(const std::string& name);
+    explicit FollowBall(const std::string& name);
 
     void halt();
 
@@ -54,4 +54,4 @@ class FollowPoint : public BT::ActionNodeBase
 
 }  // namespace behavior_trees
 
-#endif  // BEHAVIOR_TREES_FOLLOWPOINT_H
+#endif  // BEHAVIOR_TREES_FOLLOWBALL_H

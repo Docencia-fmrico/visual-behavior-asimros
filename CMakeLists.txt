@@ -63,13 +63,13 @@ add_library(asr_find_ball_node SHARED src/behavior_trees/FindBall.cpp)
 add_library(asr_find_person_node SHARED src/behavior_trees/FindPerson.cpp)
 add_library(asr_follow_person_node SHARED src/behavior_trees/FollowPerson.cpp)
 add_library(asr_turn_node SHARED src/behavior_trees/Turn.cpp)
-add_library(asr_follow_point_node SHARED src/behavior_trees/FollowPoint.cpp)
+add_library(asr_follow_ball_node SHARED src/behavior_trees/FollowBall.cpp)
 list(APPEND plugin_libs
   asr_find_ball_node
   asr_find_person_node
   asr_follow_person_node
   asr_turn_node
-  asr_follow_point_node
+  asr_follow_ball_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -98,13 +98,13 @@ target_link_libraries(follow_person_example ${PROJECT_NAME} ${catkin_LIBRARIES} 
 roslint_cpp(
   src/nodo_behavior_tree_ball.cpp
   include/behavior_trees/FindBall.h src/behavior_trees/FindBall.cpp
-  include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
+  include/behavior_trees/FollowBall.h src/behavior_trees/FollowBall.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
   src/nodo_behavior_tree_person.cpp
   src/nodo_behavior_tree_both.cpp
   include/behavior_trees/FindPerson.h src/behavior_trees/FindPerson.cpp
   include/behavior_trees/FollowPerson.h src/behavior_trees/FollowPerson.cpp
-  include/behavior_trees/FollowPoint.h src/behavior_trees/FollowPoint.cpp
+  include/behavior_trees/FollowBall.h src/behavior_trees/FollowBall.cpp
   include/behavior_trees/Turn.h src/behavior_trees/Turn.cpp
   include/br2_tracking/PIDController.h
   src/br2_tracking/PIDController.cpp

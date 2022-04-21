@@ -5,7 +5,7 @@
                 <FindBall name="ball_seen"/>
                 <Turn name="turn"/>
             </ReactiveFallback>
-            <FollowPoint name="follow_point"/>
+            <FollowPoint name="follow_ball"/>
         </Sequence>
     </BehaviorTree>
 </root>
